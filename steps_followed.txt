@@ -1,0 +1,15 @@
+install express, mongoose, ejs, express-ejs-layouts
+npm i --save-dev nodemon
+make dirs : routes, models, controllers, config, views, assets
+write the DB server
+Write the experss server and  <CHECK>
+
+Write the User_sign_up schema in models
+Write a router, controller and then call them from index. <CHECK>
+
+Make some views with the help of ejs layouts. Set the middlewares in index.js
+Acquire the express-ejs-layouts in index.js
+set the view engine and views path dir 
+use the express-ejs-layout as a middleware
+app.use(expressLayouts); app.set("layout extractScripts", true); app.set('layout extractStyles', true);
+make the _footer.ejs,_header.ejs and  layout.ejs
