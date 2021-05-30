@@ -5,5 +5,7 @@ const router=express.Router();
 const homeController=require("../controllers/home");
 
 router.get("/",homeController.home);
+//route on similar url 
+router.use("/user",require("./users"));
 
 module.exports=router;

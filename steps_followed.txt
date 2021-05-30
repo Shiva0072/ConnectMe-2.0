@@ -5,11 +5,18 @@ write the DB server
 Write the experss server and  <CHECK>
 
 Write the User_sign_up schema in models
-Write a router, controller and then call them from index. <CHECK>
+Write a router [app.use("/",routefilePath) in index.js], controller and then call them from index. <CHECK>
 
 Make some views with the help of ejs layouts. Set the middlewares in index.js
 Acquire the express-ejs-layouts in index.js
 set the view engine and views path dir 
 use the express-ejs-layout as a middleware
 app.use(expressLayouts); app.set("layout extractScripts", true); app.set('layout extractStyles', true);
-make the _footer.ejs,_header.ejs and  layout.ejs
+make the _footer.ejs,_header.ejs and  layout.ejs 
+finally make a view and render it through the controller <CHECK>
+
+Commit to git. using the .gitignore
+
+Create some more routes - userSignup and userSignin page
+make some controllers, write some respective views and then call in the routes
+Incase of forms, in the action we need to mention the "correct and complete route" [for the routes written across diff files]

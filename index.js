@@ -4,7 +4,7 @@ const db=require("./config/mongoose");
 const expressLayouts=require("express-ejs-layouts");
 
 //home route
-app.get("/",require("./routes/home"));
+app.use("/",require("./routes/home"));
 
 
 app.set("view engine","ejs");
