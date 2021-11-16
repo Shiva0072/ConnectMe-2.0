@@ -1,0 +1,16 @@
+body{
+    background-color: rgb(132, 211, 214);
+    font-size: 26px;
+}
+
+.wrapper{
+    width: 700px;
+    margin: 5px auto;
+    padding: 20px;
+    background-color: rgb(62, 233, 19);
+}
+
+header, footer{
+    background-color:cyan ;
+    padding: 20px;
+}

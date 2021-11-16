@@ -6,6 +6,6 @@ const homeController=require("../controllers/home");
 
 router.get("/",homeController.home);
 //route on similar url 
-router.use("/user",require("./users"));
+router.use("/users",require("./users"));
 
 module.exports=router;
