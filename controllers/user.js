@@ -18,7 +18,7 @@ module.exports.signIn=function(req,res){
 
 module.exports.create=(req,res)=>{
     // console.log(req.body);
-    if(req.body.password!==req.body.confirm_password){ /// check with != as well
+    if(req.body.password!==req.body.confirm_password){ 
         console.log("Please enter the same passwords");
         return res.redirect("back");
     }
@@ -41,6 +41,61 @@ module.exports.create=(req,res)=>{
             return res.redirect("/users/signin");
         }
     });
-
-    // res.end();
 };
+
+module.exports.createSession=(req,res)=>{
+    //match the email
+    // console.log(req.body);
+    //find the user
+    Users.findOne({email : req.body.email},(err,doc)=>{
+        if(err) {console.log("Error in finding the email in Doc"); return res.redirect("back");}
+
+        //user with this email exits in DB
+        if(doc){
+            //check for password
+            if(doc.password===req.body.password){
+                console.log("User successfully authenticated!");
+                res.cookie("user_id",doc._id);
+                return res.redirect("/users/profile");
+            }
+            //passwords dont match
+            console.log("Password is wrong");
+            return res.redirect("back");
+        }
+
+        //no doc exits with this email id
+        console.log("User doesnt exists in dB. Please sign-up");
+        return res.redirect("/users/signup");
+    });
+    // res.redirect("back");
+    //match the password if email matches
+}
+
+module.exports.profile=(req,res)=>{
+    // console.log(req.cookies); this can help 
+    // console.log(res.body); this cant help
+    if(!Object.keys(req.cookies).length){
+        console.log("Unauthenticated User! Please sign-in");
+        return res.redirect("back");
+    }
+
+    Users.findById(req.cookies.user_id,(err,doc)=>{
+        if(err){console.log("Error in cookie finding "); return res.redirect("back");}
+        if(doc){
+            // console.log(`We found this doc :  ${doc}`);
+            res.render("profile",doc);
+        }
+        else{
+            console.log("User is not there");
+            return res.redirect("back");
+        }
+    })
+}
+
+module.exports.deleteSession=(req,res)=>{
+    // console.log(req.cookies);
+    res.clearCookie('user_id');
+    // console.log(`Clearing the cookies ${res.clearCookie('user_id')}`);
+    // console.log(req.cookie);
+    res.redirect("/");
+}
