@@ -1,13 +1,17 @@
 const express=require("express");
+const user=require("../controllers/user");
+const passport=require("passport");
+const { Router } = require("express");
+
 const router=express.Router();
 
-//controllers
-const user=require("../controllers/user");
-
-router.get("/",user.userPage);
-router.get("/signup",user.signUp);
-router.get("/signin", user.signIn);
+router.get("/signup",passport.avoidMoveBack,user.signUp);
+router.get("/signin",passport.avoidMoveBack,user.signIn);
 
 router.post("/create",user.create);
+
+router.post("/create-session",passport.authenticate("local",{ failureRedirect: '/users/signin' }),user.create_session);
+
+router.get("/profile",passport.checkAuthentication,user.profile);
 
 module.exports=router;
