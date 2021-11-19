@@ -8,12 +8,12 @@ passport.use(new LocalStrategy({
         usernameField: 'email',
         passwordField: 'password'
     },
-    function(email, password, done) {
+    function(Username, password, done) {
         //find the user and establish the identity something similar to manual sign-in
-        console.log(`Username = ${email} | passpord = ${password}`);
-        User.findOne({ email: email }, function (err, user) {
+        // console.log(`Username = ${email} | passpord = ${password}`);
+        User.findOne({ email: Username }, function (err, user) {
             
-            // console.log("User from findOne : ",user);
+            // console.log("User from findOne query : ",user);
 
             if (err) { 
                 console.log("Error in finding the user while logging-in");
@@ -42,7 +42,7 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(id, done) {
     User.findById(id, function(err, user) {
       if(err) {console.log("Error in deserializing the user!"); return done(err,false);}
-      console.log("User found after deserializing : ",user);
+    //   console.log("User found after deserializing : ",user);
       return done(null,user);
     });
 });

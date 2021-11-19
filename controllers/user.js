@@ -41,8 +41,6 @@ module.exports.create=(req,res)=>{
             return res.redirect("/users/signin");
         }
     });
-
-    // res.end();
 };
 
 module.exports.profile=(req,res)=>{
@@ -50,7 +48,12 @@ module.exports.profile=(req,res)=>{
 }
 
 module.exports.create_session=function(req,res){
-    console.log("From Create-session we got : ",req.user); //req.user is what we get according to passport
+    // console.log("From Create-session we got : ",req.user); //req.user is what we get according to passport
     // return res.render("user_profile",req.user);
     return res.redirect("/users/profile");
+}
+
+module.exports.signOut=(req,res)=>{
+    req.logout();
+    return res.redirect("/");
 }
