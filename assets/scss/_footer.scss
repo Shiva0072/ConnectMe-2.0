@@ -1,0 +1,19 @@
+$color:black;
+$backgroundColor:rgb(223, 228, 222);
+$body_backgroundColor:rgb(149,238,171);
+#layout-footer{
+    a{
+        text-decoration: none;
+        color:$color;
+    }
+    display: flex;
+    justify-content: flex-start;
+    padding: 0px 10px;
+    background: $backgroundColor;
+
+    .footer-nav{
+        ul{
+            list-style: none;
+        }
+    }
+}

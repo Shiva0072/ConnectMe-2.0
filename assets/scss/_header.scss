@@ -1,0 +1,32 @@
+$color:rgb(223, 232, 233);
+$backgroundColor:rgba(13, 155, 238, 0.774);
+#layout-header{
+    nav{
+        display: flex;
+        justify-content: space-between;
+        padding: 0px 50px;
+        color:$backgroundColor;
+        background:$backgroundColor;
+        box-shadow: 1px 1px 1px 1px white;
+        a{
+            color:white;
+            text-decoration: none;
+        }
+        .mini-logo{
+            p{
+                margin:5px;
+                font-size: 1.4em;
+                font-weight: bold;
+            }
+        }
+        .auth-links{
+            ul{
+                display: flex;
+                margin:5% 7px;
+                li{
+                    margin-right: 18px;
+                }
+            }
+        }
+    }
+}

@@ -9,13 +9,14 @@
     <!- style>
 </head>
 <body>
-    <div class="wrapper">
-        <%- include("_header")%>
-
+    <%- include("_header");%>
+    
+    <main id="layout-main">
         <%- body%>
-
-        <%-include("_footer")%>
-    </div>
+    </main>
+    
+    <%-include("_footer");%>
+    
     <%- script%>
 </body>
 </html>
