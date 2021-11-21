@@ -8,5 +8,6 @@ router.get("/",homeController.home);
 //route on similar url 
 router.use("/users",require("./users"));
 router.use("/posts",require("./posts"));
+router.use("/comments",require("./comment"));
 
 module.exports=router;
