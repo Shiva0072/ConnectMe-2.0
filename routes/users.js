@@ -12,7 +12,9 @@ router.post("/create",user.create);
 
 router.post("/create-session",passport.authenticate("local",{ failureRedirect: '/users/signin' }),user.create_session);
 
-router.get("/profile",passport.checkAuthentication,user.profile);
+router.get("/profile/:id",passport.checkAuthentication,user.profile);
+router.post("/profile/:id",passport.checkAuthentication,user.updateUser);
+
 router.get("/signout",user.signOut);
 
 module.exports=router;

@@ -25,6 +25,30 @@ module.exports.createComment=(req,res)=>{
             
         }
     });
-
     // return res.redirect("back");
+}
+
+module.exports.deleteComment=(req,res)=>{
+    // console.log(`Comment id: ${req.params.id}`); res.redirect("back");
+
+    Comment.findById(req.params.id,(err,doc)=>{
+        if(err) {console.error("Error in finding the deleted Comment"); return res.redirect("back");}
+        // console.log(req.user.id);
+        // console.log(doc.User);
+        // console.log(doc.User.id);
+        if(doc && req.user.id==doc.User){
+            // console.log("Reached here finally ");
+            let postId=doc.post; //console.log(`doc.post = ${doc.post} and doc.post.id = ${doc.post.id}`);
+            doc.remove();
+            Post.findByIdAndUpdate(postId,{$pull:{comments:req.params.id}},function(err,doc){
+                if(err) {console.error("Error in finding the post of this comment"); return res.redirect("back");}
+                // console.log("Successfully deleted the comment on this post");
+                return res.redirect("back");
+            });
+        }
+        else{
+            console.log("Please avoid fiddling with the system!");
+            return res.redirect("back");
+        }
+    });
 }

@@ -44,16 +44,41 @@ module.exports.create=(req,res)=>{
 };
 
 module.exports.profile=(req,res)=>{
-    return res.render("user_profile",req.user);
+    // console.log(req.params.id);
+    Users.findById(req.params.id,(err,doc)=>{
+        if(err) {console.error("Error in loading profile page!"); return res.redirect("back");}
+        if(doc){
+            return res.render("user_profile",{doc: doc});
+        }
+        else{
+            return res.send("User is not found!");
+        }
+    })
 }
 
 module.exports.create_session=function(req,res){
     // console.log("From Create-session we got : ",req.user); //req.user is what we get according to passport
     // return res.render("user_profile",req.user);
-    return res.redirect("/users/profile");
+    return res.redirect("/");
 }
 
 module.exports.signOut=(req,res)=>{
     req.logout();
     return res.redirect("/");
+}
+
+module.exports.updateUser=(req,res)=>{
+    // console.log(req.params.id);
+    if(req.user.id==req.params.id){
+        Users.findByIdAndUpdate(req.params.id,req.body,function (err,doc) {
+            if(err) {console.error("Error in finding and updating the doc"); return res.redirect("back");}
+            if(doc){
+                console.log("Successfully updated the infomation ");
+                return res.redirect("back");
+            }
+        });
+    }
+    else{
+        return res.status(401).send("Unauthorized Request. Please dont fiddle with the website");
+    }
 }

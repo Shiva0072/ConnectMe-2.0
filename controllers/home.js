@@ -1,4 +1,5 @@
 const Post=require("../models/post");
+const User=require("../models/userSchema");
 
 // https://dev.to/paras594/how-to-use-populate-in-mongoose-node-js-mo0
 module.exports.home=function(req,res){
@@ -31,6 +32,18 @@ module.exports.home=function(req,res){
         //     //     console.log(d);
         //     // });
         // });
-        res.render("home",{posts:docs});
+        // res.render("home",{posts:docs});
+
+        User.find({},(err,docs2)=>{
+            if(err) {console.error("Error in finding user(friends) for Home Page!"); return res.redirect("/users/signin"); }
+            // console.log(docs2);
+            if(docs){
+                res.render("Home",{
+                    posts: docs,
+                    all_users: docs2
+                });
+            }
+        });       
+
     });
 }

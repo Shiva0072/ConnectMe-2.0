@@ -7,40 +7,23 @@
             <input type="submit" value="Post">
         </form>
     <%}%>
-
     <div id="posts-list-container">
         <ul>
             <% for (post of locals.posts){%>
-                <li>
-                    <p>
-                        <% if(locals.user && locals.user.id===post.user.id) {%>
-                            <small><a href="/posts/deletePost/<%= post.id %>">X</a></small>
-                        <%}%>
-                        <%= post.content %> <br>
-                        <small><%= post.user.name%></small>
-                    </p>
-                    <div class="post-comments">
-                        <% if(locals.user){ %>
-                            <form action="/comments/create" method="post">
-                                <input type="text" placeholder="Add comment.." name="content" required>
-                                <input type="hidden" name="post" value="<%= post._id %>">
-                                <input type="submit" value="comment">
-                            </form>  
-                        <%}%>
-                        <div class="post-comments-list">
-                            <ul class="post-comments-<%= post._id %>">
-                                <% for(comment of post.comments){ %>
-                                    <p>    
-                                        <%= comment.content %> <br>
-                                        <small><%= comment.User.name %></small>
-                                    </p>    
-                                <%}%>
-                            </ul>
-                        </div>
-
-                    </div>
-                </li>
+                <%- include("./_post") %>
             <%}%>
         </ul>
     </div>
 </section>
+
+<section class="user-friends">
+    <h4>Friends</h4>
+    <% for(frnd of locals.all_users) { %>
+        <p>
+            <a href="/users/profile/<%= frnd.id %>"><%= frnd.name %></a>
+        </p>    
+    <% } %>
+</section>
+
+
+<!-- locals.user is req.user and is set by passport -->
