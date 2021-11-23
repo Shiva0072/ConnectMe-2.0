@@ -16,16 +16,18 @@ const app=express();
 app.use(express.urlencoded());
 app.use(cookieParser());
 
-app.set("view engine","ejs");
-app.set("views","./views");
+
 
 app.use(sassMiddleware({
     src:path.join(__dirname,"./assets/scss"),
-    dest:path.join(__dirname,"/assets/css"),
+    dest:path.join(__dirname,"./assets/css"),
     debug: true,
     outputStyle:'extended',
     prefix: "/css/"
 }));
+
+app.set("view engine","ejs");
+app.set("views","./views");
 
 app.use(express.static(path.join(__dirname,"assets")));
 
