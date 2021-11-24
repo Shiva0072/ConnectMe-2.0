@@ -34,10 +34,12 @@ module.exports.deleteComment= async (req,res)=>{
             doc.remove();
             await Post.findByIdAndUpdate(postId,{$pull:{comments:req.params.id}});
             // console.log("Successfully deleted the comment on this post");
+            req.flash("success","comment deleted");
             return res.redirect("back");
         }
     }
     catch(err){
+        req.flash("error","authorization error");
         console.log("Error in finding post while creating comment : ",err); return res.redirect("back");
     }
 }

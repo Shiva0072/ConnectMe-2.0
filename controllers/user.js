@@ -32,11 +32,13 @@ module.exports.create=(req,res)=>{
             Users.create(req.body,function(err,doc){
                 if(err) {console.log(`Error in creating the User in dB`); return;}
                 console.log("User is created successfully in dB");
+                req.flash("success","You are registered!");
                 return res.redirect("/users/signin");
             });
         }
         else{
             //user exits in DB. Go to the signIn page
+            req.flash("error","Error please re-try")
             console.log("User already exits in dB. Please LogIN")
             return res.redirect("/users/signin");
         }
@@ -59,11 +61,13 @@ module.exports.profile=(req,res)=>{
 module.exports.create_session=function(req,res){
     // console.log("From Create-session we got : ",req.user); //req.user is what we get according to passport
     // return res.render("user_profile",req.user);
+    req.flash("success",req.user.name);
     return res.redirect("/");
 }
 
 module.exports.signOut=(req,res)=>{
     req.logout();
+    req.flash("success", "You have logged out !!");
     return res.redirect("/");
 }
 
@@ -73,12 +77,14 @@ module.exports.updateUser=(req,res)=>{
         Users.findByIdAndUpdate(req.params.id,req.body,function (err,doc) {
             if(err) {console.error("Error in finding and updating the doc"); return res.redirect("back");}
             if(doc){
+                req.flash("success","details updated!");
                 console.log("Successfully updated the infomation ");
                 return res.redirect("back");
             }
         });
     }
     else{
+        req.flash("error","Error ");
         return res.status(401).send("Unauthorized Request. Please dont fiddle with the website");
     }
 }

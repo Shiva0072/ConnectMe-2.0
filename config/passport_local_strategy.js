@@ -6,7 +6,7 @@ const User=require("../models/userSchema");
 //authenticating using passport
 passport.use(new LocalStrategy({
         usernameField: 'email',
-        passwordField: 'password'
+        passwordField: 'password',
     },
     function(Username, password, done) {
         //find the user and establish the identity something similar to manual sign-in
