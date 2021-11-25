@@ -7,6 +7,7 @@ module.exports.home=async (req,res)=>{
     //and for each comment populate only the user 
     try{
         const posts=await Post.find({})
+        .sort("-createdAt")
         .populate({path:'user'})
         .populate({
             path:"comments", //populate comments

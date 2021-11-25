@@ -9,6 +9,16 @@ module.exports.createPost= async (req,res)=>{
             content:req.body.content,
             user:req.user._id
         });
+
+        if(req.xhr){
+            return res.status(200).json({
+                data:{
+                    post:post
+                },
+                message: "Post created !"
+            });
+        }
+
         req.flash("success","Post published");
         return res.redirect("back");
     }
@@ -25,6 +35,14 @@ module.exports.deletePost=async (req,res)=>{
         if(doc.user==req.user.id){
             doc.remove();
             await Comment.deleteMany({post:req.params.id});
+
+            if(req.xhr){
+                return res.status(200).json({
+                    data:{post_id: req.params.id},
+                    message: "Post deleted"
+                });
+            }
+
             //all done successfully
             req.flash("success", "Post and associated comments deleted ");
             return res.redirect("back"); 
