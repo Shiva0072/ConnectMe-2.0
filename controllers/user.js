@@ -1,4 +1,6 @@
 const Users=require("../models/userSchema.js");
+const path=require("path");
+const fs=require("fs");
 
 module.exports.userPage=function(req,res){
     return res.send("<h1> WELCOME to user page</h1>");
@@ -71,17 +73,48 @@ module.exports.signOut=(req,res)=>{
     return res.redirect("/");
 }
 
-module.exports.updateUser=(req,res)=>{
+module.exports.updateUser= async (req,res)=>{
     // console.log(req.params.id);
+    // if(req.user.id==req.params.id){
+    //     Users.findByIdAndUpdate(req.params.id,req.body,function (err,doc) {
+    //         if(err) {console.error("Error in finding and updating the doc"); return res.redirect("back");}
+    //         if(doc){
+    //             req.flash("success","details updated!");
+    //             console.log("Successfully updated the infomation ");
+    //             return res.redirect("back");
+    //         }
+    //     });
+    // }
+    // else{
+    //     req.flash("error","Error ");
+    //     return res.status(401).send("Unauthorized Request. Please dont fiddle with the website");
+    // }
+
+    //Users.uploadedAvatar is a static method. It is defined for the model itself. All the docs could refer it without making a separate copy of this methd for their own
+    //Users.uplaodedAvatar is used as a callback function for the multer storage.
+    //We cant use req.body directly(outside) since the form-type is now multipart, so we use multer as a MW. Users.uplaodedAvatar helps in parsing it.  
     if(req.user.id==req.params.id){
-        Users.findByIdAndUpdate(req.params.id,req.body,function (err,doc) {
-            if(err) {console.error("Error in finding and updating the doc"); return res.redirect("back");}
-            if(doc){
-                req.flash("success","details updated!");
-                console.log("Successfully updated the infomation ");
-                return res.redirect("back");
-            }
-        });
+        try{
+            let doc=await Users.findById(req.params.id);
+            Users.uploadedAvatar(req,res,function(err){
+                if(err){ console.error("Error with multer ",err);}
+                // console.log(req.file,"\n", req.body);
+                doc.name=req.body.name;
+                doc.email=req.body.email;
+
+                if(req.file){
+                    //saving the path of the uploaded file into the avatar field in the user
+                    doc.avatar=Users.avatarPath+"/"+req.file.filename;
+                }
+                doc.save();
+            });
+            return res.redirect("back");
+        }
+        catch(err){
+            req.flash("error",err);
+            console.error("Error in updating the user : ",err);
+            return res.redirect("back");
+        }
     }
     else{
         req.flash("error","Error ");

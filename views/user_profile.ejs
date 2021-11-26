@@ -1,10 +1,13 @@
 <h1>Greetings <%= locals.doc.name%></h1>
 
+<img src="<%= locals.doc.avatar %>" alt="<%= locals.doc.name %>" width="100">
+
 <% if(locals.user.id == locals.doc.id){ %>
     <div>Change details </div>
-    <form action="/users/profile/<%= locals.user.id%>" method="POST">
+    <form action="/users/update/<%= locals.user.id %>" enctype="multipart/form-data" method="POST">
         <input type="text" name="name" placeholder="new name" value="<%= locals.doc.name %>" required>
         <input type="email" name="email" placeholder="new email" value="<%= locals.doc.email %>" required>
+        <input type="file" name="avatar" placeholder="Profile Picture">
         <input type="submit" value="Update">
     </form>
 <% } else{ %>        

@@ -31,6 +31,8 @@ app.set("view engine","ejs");
 app.set("views","./views");
 
 app.use(express.static(path.join(__dirname,"assets")));
+//make the uplaods path available to the browser
+app.use("/uploads",express.static(path.join(__dirname,"/uploads")));
 
 //MW
 app.use(expressLayouts);

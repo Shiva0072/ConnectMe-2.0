@@ -15,7 +15,7 @@ passport.authenticate("local",{ failureRedirect: '/users/signin',failureFlash: '
 ,user.create_session);
 
 router.get("/profile/:id",passport.checkAuthentication,user.profile);
-router.post("/profile/:id",passport.checkAuthentication,user.updateUser);
+router.post("/update/:id",passport.checkAuthentication,user.updateUser);
 
 router.get("/signout",user.signOut);
 
