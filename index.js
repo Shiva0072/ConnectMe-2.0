@@ -6,12 +6,13 @@ const path=require("path");
 const session=require("express-session");
 const passport=require("passport");
 const passportLocal=require("./config/passport_local_strategy");
+const passportJWT=require("./config/passport_jwt_strategy");
 const MongoDBStore = require('connect-mongodb-session')(session);
 const sassMiddleware = require('node-sass-middleware');
 const flash=require("connect-flash");
 const customMW=require("./config/middleware");
 
-const PORT=8008;
+const PORT=8008; //dont change the port here. This is saved in OAuth also
 const app=express();
 
 app.use(express.urlencoded());
