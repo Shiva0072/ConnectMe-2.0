@@ -17,6 +17,10 @@ passport.authenticate("local",{ failureRedirect: '/users/signin',failureFlash: '
 router.get("/profile/:id",passport.checkAuthentication,user.profile);
 router.post("/update/:id",passport.checkAuthentication,user.updateUser);
 
+///include {"email"}
+router.get("/auth/google", passport.authenticate('google', { scope: ['profile',"email"] }));
+router.get("/auth/google/callback",passport.authenticate("google",{failureRedirect: "/users/signin"}),user.create_session);
+
 router.get("/signout",user.signOut);
 
 module.exports=router;
