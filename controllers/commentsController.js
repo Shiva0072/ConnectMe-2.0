@@ -1,3 +1,4 @@
+const { newComment } = require("../mailers/comments_mailer");
 const Comment=require("../models/comment");
 const Post=require("../models/post");
 
@@ -16,7 +17,13 @@ module.exports.createComment=async (req,res)=>{
             });
             doc.comments.push(comment);
             doc.save();
-            return res.redirect("/");
+
+            let commentInfo=await comment.populate('User').execPopulate(); //doc(comment) is already there. Just populate it
+            // let commentInfo=await Comment.findById(comment.id).populate("User"); //get the doc(comment) from the collection and on the way populate it
+            // console.log("Comment created : ",commentInfo);
+            newComment(commentInfo);
+
+            return res.redirect("back");
         }
     } 
     catch(err){
