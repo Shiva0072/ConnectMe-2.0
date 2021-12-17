@@ -1,7 +1,9 @@
 const Users=require("../models/userSchema");
 const accessToken=require("../models/accessToken");
 const crypto=require("crypto");
-const resetMailer=require("../mailers/passwordReset_mailer");
+const resetPasswordWorker=require("../workers/password_reset_worker");
+// const resetMailer=require("../mailers/passwordReset_mailer");
+const queue=require("../config/kue");
 
 module.exports.resetPassword=(req,res)=>{
     return res.render("user_reset_password");
@@ -21,10 +23,19 @@ module.exports.resetSendEmail= async (req,res)=>{
         // console.log("User token created : ",userToken);
         const reset_link=`http://localhost:8008/users/reset/changePasswordPage/?token=${userToken.token}`;
         // console.log(reset_link);
-        resetMailer.resetEmail(doc.email,reset_link);
-    
-        
-        return res.send("opkay");
+
+        // resetMailer.resetEmail(doc.email,reset_link);
+        ////started using this as delayed job but with high priority to manage network traffic
+        let job=await queue.create('resetPassword', {"email":doc.email, "link": reset_link})
+        .priority("high")
+        .save(function(err){
+            if(err){
+                console.log("Failed in enqueing the resetPassword task"); return;
+            }
+            console.log("Job enqueued : ",job.id);
+        }); 
+
+        return res.send("Please check your mail for reset link !");
     }
     catch(err){
         console.log("Error in reseting password :",err);
