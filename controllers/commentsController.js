@@ -1,4 +1,6 @@
 const { newComment } = require("../mailers/comments_mailer");
+const queue=require('../config/kue');
+const commentEmailWorker=require("../workers/comment_email_worker");
 const Comment=require("../models/comment");
 const Post=require("../models/post");
 
@@ -18,10 +20,21 @@ module.exports.createComment=async (req,res)=>{
             doc.comments.push(comment);
             doc.save();
 
-            let commentInfo=await comment.populate('User').execPopulate(); //doc(comment) is already there. Just populate it
+            let commentInfo=await comment.populate('User').execPopulate(); //doc(comment) is already there. Just populate it. We use it this way=> execPopulate() when doc is already fetched
             // let commentInfo=await Comment.findById(comment.id).populate("User"); //get the doc(comment) from the collection and on the way populate it
             // console.log("Comment created : ",commentInfo);
-            newComment(commentInfo);
+
+            //email to the commentor. //newComment(commentInfo);
+            //instead of now directly mailing, we will now process them as delayed jobs. 
+            //Add this to queue named as: 'emails'
+            let job=queue.create('emails', commentInfo).save(function(err){
+                if(err) {console.log("Error in sending to queue ",err); return;}
+
+                console.log("job enqueued : ",job.id);
+                //just running queue.create('emails', commentInfo).save(), gives the job
+                // console.log("Job data : ", job.data);
+            });
+
 
             return res.redirect("back");
         }

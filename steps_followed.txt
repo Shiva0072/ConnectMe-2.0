@@ -20,3 +20,23 @@ Commit to git. using the .gitignore
 Create some more routes - userSignup and userSignin page
 make some controllers, write some respective views and then call in the routes
 Incase of forms, in the action we need to mention the "correct and complete route" [for the routes written across diff files]
+
+==========================================================================================================================================================================================
+Sending mails:-
+https://dev.to/fawazsullia/how-to-send-email-with-node-js-for-free-4okc
+Nodemailer is used to send the emails.
+Create a nodemailer transporter object and use this object to send the emails. 
+    Here, after creating the nodemailer object in Config file, we use it to send emails via function defined in mailers folder.
+        This function for sending the emails is being called everytime when a new comment is made. We obviously need to send some info along with it [function argument]. 
+
+Parallel Jobs:-
+https://blog.jscrambler.com/queue-jobs-kue
+Kue creates queues for several jobs( which are simulated as if running parallel). These are stored via redis in the RAM in JSON format[key-value pair].
+Redis Server maintians the queues. We can say it is a DB maintianing delayed jobs. They could be stored in some permanent storage also. Ram is temporary. 
+Kue is a Node.js package that provides a level of abstraction over Redis queues, as well as providing some useful tools for monitoring your jobs
+Redis could also be used for caching. Say a video/post is going viral, it can cached in localStorage and everytime user requests for it, it would be sending infor w/o querying the dB.
+Workers constantly ping the queues to take up the jobs based on their priority and complete them. Thus they handle queues.
+
+Overall=> When a new comment is there, add this task(sending emails) to the queue. and then this queue runs the task via nodemialer. 
+==========================================================================================================================================================================================
+
