@@ -46,4 +46,8 @@ Part 1: Sending email to the user for resetting the password with accessToken
     Create routes for entering the email of the user.
     Using this email, get the user from the dB and then create the token-doc using the TokenSchema.
     grab the accessToken and build the link. Send this link via mail to the user.
- 
+Part 2: Change the password
+    Grab the access token. Inorder to make it available to the function to be called after the user enters the passwords
+    we pass it into the form as a hidden tag and extract it later.(other ways are also possible).
+    In the final stage, extract the token, and then get the user with this token and update the password.
+
