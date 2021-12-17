@@ -121,3 +121,4 @@ module.exports.updateUser= async (req,res)=>{
         return res.status(401).send("Unauthorized Request. Please dont fiddle with the website");
     }
 }
+

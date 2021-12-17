@@ -13,7 +13,7 @@ const sassMiddleware = require('node-sass-middleware');
 const flash=require("connect-flash");
 const customMW=require("./config/middleware");
 
-const PORT=8008; //dont change the port here. This is saved in OAuth also
+const PORT=8008; //dont change the port here. This is saved in OAuth callback, resetPassword also.
 const app=express();
 
 app.use(express.urlencoded());

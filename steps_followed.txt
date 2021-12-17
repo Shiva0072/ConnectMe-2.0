@@ -40,3 +40,10 @@ Workers constantly ping the queues to take up the jobs based on their priority a
 Overall=> When a new comment is there, add this task(sending emails) to the queue. and then this queue runs the task via nodemialer. 
 ==========================================================================================================================================================================================
 
+Password reset is one of the best way for revising the nodemailer and routing
+
+Part 1: Sending email to the user for resetting the password with accessToken
+    Create routes for entering the email of the user.
+    Using this email, get the user from the dB and then create the token-doc using the TokenSchema.
+    grab the accessToken and build the link. Send this link via mail to the user.
+ 

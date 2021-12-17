@@ -5,6 +5,8 @@ const { Router } = require("express");
 
 const router=express.Router();
 
+router.use('/reset',require('./reset.js'));
+
 router.get("/signup",passport.avoidMoveBack,user.signUp);
 router.get("/signin",passport.avoidMoveBack,user.signIn);
 
