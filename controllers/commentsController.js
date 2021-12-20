@@ -3,6 +3,7 @@ const queue=require('../config/kue');
 const commentEmailWorker=require("../workers/comment_email_worker");
 const Comment=require("../models/comment");
 const Post=require("../models/post");
+const likes=require("../models/likes");
 
 module.exports.createComment=async (req,res)=>{
     try{
@@ -53,7 +54,8 @@ module.exports.deleteComment= async (req,res)=>{
             let postId=doc.post; //console.log(`doc.post = ${doc.post} and doc.post.id = ${doc.post.id}`);
             doc.remove();
             await Post.findByIdAndUpdate(postId,{$pull:{comments:req.params.id}});
-            // console.log("Successfully deleted the comment on this post");
+            await likes.deleteMany({likeable: doc._id,onModel:"Comment"});
+            // console.log("Successfully deleted the comment and its likes on this post");
             req.flash("success","comment deleted");
             return res.redirect("back");
         }

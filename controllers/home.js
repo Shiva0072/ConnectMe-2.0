@@ -3,18 +3,23 @@ const User=require("../models/userSchema");
 
 // https://dev.to/paras594/how-to-use-populate-in-mongoose-node-js-mo0
 module.exports.home=async (req,res)=>{
-    //find all the post and for each-post populate its user and comment
-    //and for each comment populate only the user 
+    //find all the post and for each-post populate its user, comment and likes
+    //and for each comment populate only the user and likes
+
     try{
         const posts=await Post.find({})
         .sort("-createdAt")
         .populate({path:'user'})
         .populate({
             path:"comments", //populate comments
-            populate:{       // and then populate the User of this comment
+            populate:{       // and then populate the User of this comment[each comment]
                 path: "User"
+            },
+            populate:{      // and then populate the likes of this comment[each comment]
+                path: "likes"
             }
-        });
+        })
+        .populate({path: "likes"});  //populate the likes on each post
 
         const users=await User.find({});
 
