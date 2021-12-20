@@ -4,7 +4,8 @@
             <small><a class="delete-post-button" href="/posts/deletePost/<%= post.id %>">X</a></small>
         <%}%>
         <%= post.content %> <br>
-        <small><%= post.user.name%></small>
+        <small><%= post.user.name%></small> <br>
+
     </p>
     <div class="post-comments">
         <% if(locals.user){ %>

@@ -15,10 +15,10 @@ const postSchema=mongoose.Schema({
             type:mongoose.Schema.Types.ObjectId,
             ref:"Comment"    
         }
-    ]
+    ],
 },{
     timestamps:true
 });
 
-const Post=mongoose.model('Post',postSchema);
+const Post=mongoose.model('posts',postSchema);
 module.exports=Post;

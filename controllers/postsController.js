@@ -32,10 +32,10 @@ module.exports.deletePost=async (req,res)=>{
     try{
         let doc=await Post.findById(req.params.id);
         
-        if(doc.user==req.user.id){
-            doc.remove();
-            await Comment.deleteMany({post:req.params.id});
-
+        if(doc.user==req.user.id){                                 
+            doc.remove();                                                                          //this post
+            await Comment.deleteMany({post:req.params.id}); // <=> doc._id                         //comments on this post
+      
             if(req.xhr){
                 return res.status(200).json({
                     data:{post_id: req.params.id},

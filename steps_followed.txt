@@ -50,9 +50,4 @@ Part 2: Change the password
     Grab the access token. Inorder to make it available to the function to be called after the user enters the passwords
     we pass it into the form as a hidden tag and extract it later.(other ways are also possible).
     In the final stage, extract the token, and then get the user with this token and update the password.
-Part 3: Deploy the jobs in queues using Kue
-    The task of mailing is now handled by the Kue, We create the queue and add tasks into the queue. Workers completes the tasks in queues.
-    But before creating tasks, we first need to create process function for this queue which will be handling the array of jobs. Workers ping them and complete the job.
-    We now need to just add task into the queue, using queue.create("taskName", {information}). 
-        Note: 2 imp things=> both queue config file and workers needs to be imported for task assignment
 
