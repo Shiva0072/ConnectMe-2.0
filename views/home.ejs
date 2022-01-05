@@ -31,6 +31,11 @@
     <%- include("_chat_box") %>
 </div>
 <script src="/js/home_posts.js"></script>
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.0/socket.io.js"></script>
+<script src="/js/chat_engine.js"></script>
+<% if(locals.user){ %>
+<script>
+    new ChatEngine('user-chat-box',"<%= locals.user.email %>"); 
+</script>
+<% } %>
 <!-- locals.user is req.user and is set by passport -->
