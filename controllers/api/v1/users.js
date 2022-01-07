@@ -1,5 +1,6 @@
 const jwt=require("jsonwebtoken");
 const User=require("../../../models/userSchema");
+const env=require('../../../config/environment');
 
 module.exports.createSession= async (req,res)=>{
     try{
@@ -16,7 +17,7 @@ module.exports.createSession= async (req,res)=>{
             token: jwt.sign({
                 exp: Math.floor(Date.now() / 1000) + (60 * 60),
                 data: doc,
-              }, 'ConnetMe_Shivam')
+              }, env.jwt_secretOrKey)
             //// or
             // data: {
             //     token: jwt.sign(doc.toJSON(),"ConnetMe_Shivam",{expiresIn: Math.floor(Date.now() / 1000) + (60 * 60) })

@@ -1,4 +1,5 @@
 const express=require('express');
+const env=require('./config/environment');
 const PORT=8008; //dont change the port here. This is saved in OAuth callback, resetPassword also.
 const app=express();
 const db=require("./config/mongoose");
@@ -14,6 +15,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 // const sassMiddleware = require('node-sass-middleware');
 const flash=require("connect-flash");
 const customMW=require("./config/middleware");
+const morgan=require('morgan');
 
 //pass the instance of httpServer to the io library
 const httpServer=require("http").createServer(app);    
@@ -24,21 +26,23 @@ httpServer.listen(5000,()=>{
 
 app.use(express.urlencoded());
 app.use(cookieParser());
+app.use(morgan(env.morgan.format,env.morgan.options));
 
+if(env.name=='development'){
+    // app.use(sassMiddleware({
+    //     src:path.join(__dirname,env.asset_path,scss), 
+    //     dest:path.join(__dirname,env.asset_path,css),
+    //     debug: true,
+    //     outputStyle:'extended',
+    //     prefix: "/css/"
+    // }));
+}
 
-
-// app.use(sassMiddleware({
-//     src:path.join(__dirname,"./assets/scss"),
-//     dest:path.join(__dirname,"./assets/css"),
-//     debug: true,
-//     outputStyle:'extended',
-//     prefix: "/css/"
-// }));
 
 app.set("view engine","ejs");
 app.set("views","./views");
 
-app.use(express.static(path.join(__dirname,"assets")));
+app.use(express.static(path.join(__dirname,env.asset_path)));
 //make the uplaods path available to the browser
 app.use("/uploads",express.static(path.join(__dirname,"/uploads")));
 
@@ -51,7 +55,7 @@ app.set('layout extractStyles', true);
 //express-session:cookie encryption 
 app.use(session({
     name:"ConnectMe",
-    secret: 'joe',
+    secret: env.session_cookie_key,
     resave: false,
     saveUninitialized: false,
     cookie: { 

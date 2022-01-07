@@ -50,4 +50,51 @@ Part 2: Change the password
     Grab the access token. Inorder to make it available to the function to be called after the user enters the passwords
     we pass it into the form as a hidden tag and extract it later.(other ways are also possible).
     In the final stage, extract the token, and then get the user with this token and update the password.
+==========================================================================================================================================================================================
+
+Understanding the productionization:-
+Understanding the environment variable : https://medium.com/chingu/an-introduction-to-environment-variables-and-how-to-use-them-f602f66d15fa
+
+    Setting up Environment Variables Linux/Mac Os
+Environment variables are added to the ‘.bash_profile’ directory,
+for the current user.If bash profile doesnt exist we can create it at root.
+One can use vim editor for viewing and editing environment
+variables or any other editor aswell.
+1. Open a new terminal
+2. Type vi ~/.bash_profile  [to open the bash_profile in vim]
+3. Now you can add desired environment variable by using the export
+keyword. For e.g.
+export USER_EMAIL="user@gmail.com"
+export USER_PASSWORD="ConnectMe"
+4. Now to save the bash_profile press Esc followed by ‘:wq’ (write
+and quit)
+5. Now refresh the variables loaded into the memory by typing: source ~/.bash_profile
+6. Now These can now be used in the project using
+userEmail = process.env.USER_EMAIL
+userPassword = process.env.USER_PASSWORD
+
+    Setting up Environment Variables Windows
+1. To add environment variables in windows, go to start, search
+environment variables
+2. Now under system variables click on new
+3. Now set the variable name what you require and also set the
+values.For example set variable name as port and value as 8000
+4. For using the environment variable in the project use
+process.env.Variable_name (e.g. process.env.port )
+OR 
+in the terminal only: 
+    $env:PROJECT_NAME_VARIABLE_NAME="value"       and enter.
+eg: $env:CONNECTME_ENVIRONMENT="production"
+    $env:CONNECTME_ASSET_PATH="/assets"
+    $env:CONNECTME_SESSION_COOKIE_KEY="KmL1rsRE9x0z)RpE6ed}{y]1:*o2f,"
+    $env:CONNECTME_GOOGLE_CLIENT_ID="723196947714-h85dk35up73doemn2dtf07st6p5l02s3.apps.googleusercontent.com" etc...
+
+For both MAC and Windows:-
+Type node (press enter) and then into that, type process.env to see all the variables.
+These variables are loaded in the memory temporarily and get vanished on restart.
+==========================================================================================================================================================================================
+
+
+
+
 
