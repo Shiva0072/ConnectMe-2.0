@@ -2,6 +2,7 @@ const express=require('express');
 const env=require('./config/environment');
 const PORT=8008; //dont change the port here. This is saved in OAuth callback, resetPassword also.
 const app=express();
+require('./config/view-helpers')(app);
 const db=require("./config/mongoose");
 const expressLayouts=require("express-ejs-layouts");
 const cookieParser=require("cookie-parser");

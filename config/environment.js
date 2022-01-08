@@ -40,7 +40,7 @@ const development={
 
 const production={
     name: process.env.CONNECTME_ENVIRONMENT,//production
-    asset_path:process.env.CONNECTME_ASSET_PATH,
+    asset_path:process.env.CONNECTME_ASSET_PATH, // /public/assets
     session_cookie_key:process.env.CONNECTME_SESSION_COOKIE_KEY,
     db:process.env.CONNECTME_DB,
     smtp:{
