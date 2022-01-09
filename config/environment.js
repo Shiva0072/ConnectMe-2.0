@@ -17,7 +17,8 @@ const development={
     name: 'development',
     asset_path:'/assets',
     session_cookie_key:'joe',
-    db:'ConnectMe',
+    // db:'ConnectMe',
+    db:'mongodb+srv://shivam:Shivam@123@cluster0.pgrbi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
     smtp:{
         service: "gmail",
         host: "smtp.gmail.com",
@@ -42,7 +43,8 @@ const production={
     name: process.env.CONNECTME_ENVIRONMENT,//production
     asset_path:process.env.CONNECTME_ASSET_PATH, // /public/assets
     session_cookie_key:process.env.CONNECTME_SESSION_COOKIE_KEY,
-    db:process.env.CONNECTME_DB,
+    // db:process.env.CONNECTME_DB,
+    db:'mongodb+srv://shivam:Shivam@123@cluster0.pgrbi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
     smtp:{
         service: "gmail",
         host: "smtp.gmail.com",
